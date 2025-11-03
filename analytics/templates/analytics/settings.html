@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-R">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f4f7f6; }
+        form { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"] { width: 95%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        button { background-color: #ff0000; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+        button:hover { background-color: #cc0000; }
+    </style>
+</head>
+<body>
+    <h1>Configurações da Conta</h1>
+    <p>Insira os IDs que você deseja monitorar no seu dashboard.</p>
+
+    <form method="POST">
+        {% csrf_token %} <div>
+            <label for="{{ form.youtube_channel_id.id_for_label }}">{{ form.youtube_channel_id.label }}</label>
+            {{ form.youtube_channel_id }}
+        </div>
+
+        <div>
+            <label for="{{ form.default_video_id.id_for_label }}">{{ form.default_video_id.label }}</label>
+            {{ form.default_video_id }}
+        </div>
+
+        <button type="submit">Salvar</button>
+    </form>
+</body>
+</html>

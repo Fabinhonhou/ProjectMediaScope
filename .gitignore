@@ -1,0 +1,28 @@
+# Arquivo .gitignore
+
+# 1. Segurança (NUNCA suba arquivos com senhas ou chaves)
+.env
+*.env
+
+# 2. Ambiente Virtual (NUNCA suba a pasta do venv)
+venv/
+env/
+.venv/
+
+# 3. Arquivos do Python (Lixo de compilação)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 4. Banco de Dados de Desenvolvimento
+*.sqlite3
+db.sqlite3
+
+# 5. Arquivos de IDEs (VSCode, PyCharm, etc.)
+.vscode/
+.idea/
+
+# 6. Arquivos de Sistema (Mac/Windows)
+.DS_Store
+Thumbs.db

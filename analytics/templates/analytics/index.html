@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do YouTube</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --primary-color: #ff0000; /* Cor do YouTube */
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        header img {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .error {
+            background-color: #ffe0e0;
+            color: #d00;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #d00;
+        }
+
+        /* Grid de Estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        .stat-card h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .stat-card .number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        /* Seção do Gráfico */
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        {% if error_message %}
+            <div class="error">
+                <strong>Erro:</strong> {{ error_message }}
+            </div>
+        {% endif %}
+
+        {% if channel_stats %}
+            <header>
+                <img src="{{ channel_stats.thumbnail_url }}" alt="Thumbnail do Canal">
+                <h1>{{ channel_stats.title }}</h1>
+            </header>
+
+            <h2>Estatísticas Gerais do Canal</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Inscritos</h3>
+                    <div class="number">{{ channel_stats.subscriber_count|floatformat:"0" }}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Visualizações Totais</h3>
+                    <div class="number">{{ channel_stats.view_count|floatformat:"0" }}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total de Vídeos</h3>
+                    <div class="number">{{ channel_stats.video_count|floatformat:"0" }}</div>
+                </div>
+            </div>
+
+            {% if video_chart_data %}
+                <div class="chart-container">
+                    <canvas id="videoChart"></canvas>
+                </div>
+                {{ video_chart_data|json_script:"chart-data" }}
+            {% endif %}
+
+        {% elif not error_message %}
+            <p>Nenhum dado encontrado.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        // Pega os dados que passamos com o 'json_script'
+        const chartDataElement = document.getElementById('chart-data');
+
+        if (chartDataElement) {
+            const chartData = JSON.parse(chartDataElement.textContent);
+            const ctx = document.getElementById('videoChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar', // Tipo de gráfico: barras
+                data: {
+                    labels: chartData.labels, // ['Visualizações', 'Likes', 'Comentários']
+                    datasets: [{
+                        label: `Estatísticas do Vídeo: ${chartData.video_title}`,
+                        data: chartData.data, // [view_count, like_count, comment_count]
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
