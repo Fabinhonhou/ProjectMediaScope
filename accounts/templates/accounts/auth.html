@@ -218,6 +218,33 @@
             animation: slideIn 0.3s ease;
         }
 
+        /* Em users/templates/users/login.html, dentro do seu <style> */
+
+/*
+   Este é o novo estilo para o botão "Ver Planos"
+   É um botão "fantasma" (outline) que usa a cor primária
+*/
+.btn-outline {
+    display: block; /* Ocupa a largura toda */
+    text-align: center;
+    text-decoration: none;
+    padding: 12px 20px;
+    margin-top: 15px; /* Espaço do botão de cima */
+    
+    color: var(--primary); /* Cor do texto (Roxo) */
+    border: 2px solid var(--primary); /* Borda (Roxa) */
+    border-radius: 8px; /* Arredondamento (igual aos outros botões) */
+    
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Efeito 'hover' (passar o mouse) */
+.btn-outline:hover {
+    background-color: var(--primary); /* Fundo fica Roxo */
+    color: var(--text-color); /* Texto fica Branco */
+}
+
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -286,6 +313,7 @@
                 Sign up
             </button>
         </div>
+        
 
         <!-- Sign In Form -->
         <div id="signin-tab" class="tab-content {% if active_tab != 'signup' %}active{% endif %}">
@@ -298,6 +326,7 @@
                 </svg>
                 Login com o Google
             </a>
+
 
             <div class="divider">OR</div>
 
@@ -329,6 +358,10 @@
                     <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
                 </svg>
                 Login com o Google
+            </a>
+
+            <a href="{% url 'planos' %}" class="btn-outline">
+                Ver nossos planos
             </a>
 
             <div class="divider">OR</div>

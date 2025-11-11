@@ -1,0 +1,44 @@
+{% extends "analytics/base.html" %}
+{% block title %}Admin Dashboard - Media Scope{% endblock %}
+
+{% block content %}
+
+<style>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+        gap: 25px;
+    }
+    .kpi-card { grid-column: span 1; } 
+    .chart-card { grid-column: span 3; } /* Gráfico ocupa tudo */
+
+    .kpi-card-value { font-size: 2.5rem; font-weight: 700; color: var(--text-color); margin-bottom: 10px; }
+</style>
+
+<div class="dashboard-grid">
+
+    <div class="card kpi-card">
+        <div class="card-title">Renda Total (R$)</div>
+        <div class="kpi-card-value">R$ {{ total_revenue|floatformat:2 }}</div>
+    </div>
+
+    <div class="card kpi-card">
+        <div class="card-title">Clientes Ativos</div>
+        <div class="kpi-card-value">{{ total_clients }}</div>
+    </div>
+
+    <div class="card kpi-card">
+        <div class="card-title">Total de Usuários (Cadastrados)</div>
+        <div class="kpi-card-value">{{ total_users }}</div>
+    </div>
+
+    <div class="card chart-card">
+        <div class="card-title">Novos Clientes (Em breve)</div>
+        <div style="height: 300px;">
+            <p style="color:var(--text-muted)">Gráfico de novos clientes e renda virá aqui.</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

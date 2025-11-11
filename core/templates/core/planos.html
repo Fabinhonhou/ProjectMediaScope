@@ -1,0 +1,234 @@
+{% extends "core/base_public.html" %}
+
+{% block title %}Planos - Media Scope{% endblock %}
+
+{% block content %}
+<style>
+    .pricing-header {
+        text-align: center;
+        margin: 40px 0;
+    }
+    .pricing-header h1 {
+        font-size: 3rem;
+        color: var(--text-color);
+        margin-bottom: 20px;
+    }
+    .pricing-header p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        margin-bottom: 30px;
+    }
+
+    /* O seletor Mensal/Anual (baseado no seu design) */
+    .plan-toggle {
+        display: inline-flex;
+        background-color: var(--card-bg);
+        border-radius: 30px;
+        padding: 5px;
+    }
+    .plan-toggle button {
+        border: none;
+        background-color: transparent;
+        color: var(--text-muted);
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 10px 25px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+    .plan-toggle button.active {
+        background-color: var(--primary);
+        color: var(--text-color);
+        box-shadow: 0 4px 10px rgba(157, 78, 221, 0.3);
+    }
+
+    /* Grid dos Planos */
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    /* Card de Plano Individual */
+    .plan-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-bg);
+        border-radius: 16px;
+        padding: 30px;
+        transition: all 0.2s ease-in-out;
+        position: relative; /* Para a tag "Popular" */
+    }
+    /* O brilho do seu design */
+    .plan-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(157, 78, 221, 0.2);
+        transform: translateY(-5px);
+    }
+
+    /* Tag "Mais Popular" (Enterprise) */
+    .plan-card .popular-badge {
+        position: absolute;
+        top: 20px;
+        right: -10px;
+        background-color: var(--secondary);
+        color: var(--text-color);
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 5px 15px;
+        border-radius: 20px 0 0 20px;
+        box-shadow: 0 2px 5px rgba(232, 69, 160, 0.3);
+    }
+
+    .plan-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        background-color: var(--bg-color);
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .plan-card h3 {
+        font-size: 1.5rem;
+        color: var(--text-color);
+        margin-bottom: 15px;
+    }
+
+    .plan-price {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 30px;
+    }
+    .plan-price span {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-muted);
+    }
+
+    .plan-features {
+        list-style: none;
+        margin-bottom: 30px;
+    }
+    .plan-features li {
+        color: var(--text-muted);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .plan-features .icon-check {
+        font-size: 1.2rem;
+        color: var(--primary);
+    }
+
+    .plan-button {
+        text-decoration: none;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        border: 1px solid var(--text-muted);
+        padding: 15px;
+        display: block;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.2s ease-in-out;
+    }
+    .plan-card:hover .plan-button {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+
+</style>
+
+<div class="pricing-header">
+    <h1>Simples preços, poderosos planos</h1>
+    <p>Simples, transparente preço que cresce junto com você. Experimente por 30 dias gratuitos.</p>
+
+    <div class="plan-toggle">
+        <button class="active" id="btn-monthly">Mensal</button>
+        <button id="btn-annual">Anual</button>
+    </div>
+</div>
+
+<div class="pricing-grid">
+    <div class="plan-card">
+        <div class="plan-icon"><span class="material-symbols-outlined">auto_awesome</span></div>
+        <h3>Plano Essential</h3>
+        <div class="plan-price" data-monthly="R$237" data-annual="2100">
+            R$237<span>/mês</span>
+        </div>
+        <ul class="plan-features">
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Dashboard básico</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Análise de sentimentos</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Alertas por email</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> 5.000 menções/mês</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> 1 Usuário</li>
+        </ul>
+        <a href="#" class="plan-button">Comece agora</a>
+    </div>
+
+    <div class="plan-card">
+        <span class="popular-badge">Mais Popular</span>
+        <div class="plan-icon"><span class="material-symbols-outlined">business_center</span></div>
+        <h3>Enterprise plan</h3>
+        <div class="plan-price" data-monthly="R$1297" data-annual="9079"> R$1297<span>/mês</span>
+        </div>
+        <ul class="plan-features">
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Menções limitadas</li> <li><span class="material-symbols-outlined icon-check">check_circle</span> Análise preditiva com IA</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Suporte dedicado</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Segura enterprise</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Alertas inteligentes 24/7</li>
+        </ul>
+        <a href="#" class="plan-button">Comece agora</a>
+    </div>
+
+    <div class="plan-card">
+        <div class="plan-icon"><span class="material-symbols-outlined">workspace_premium</span></div>
+        <h3>Professional plan</h3>
+        <div class="plan-price" data-monthly="R$597" data-annual="4776"> R$597<span>/mês</span>
+        </div>
+        <ul class="plan-features">
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> 20.000 menções/mês</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Dashboards ilimitados</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Suporte prioritário</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Análise de sentimentos avançada</li>
+            <li><span class="material-symbols-outlined icon-check">check_circle</span> Alertas multi-canais</li>
+        </ul>
+        <a href="#" class="plan-button">Comece agora</a>
+    </div>
+</div>
+
+<script>
+    const btnMonthly = document.getElementById('btn-monthly');
+    const btnAnnual = document.getElementById('btn-annual');
+    const prices = document.querySelectorAll('.plan-price');
+
+    btnMonthly.addEventListener('click', () => {
+        btnMonthly.classList.add('active');
+        btnAnnual.classList.remove('active');
+        prices.forEach(priceEl => {
+            priceEl.innerHTML = `${priceEl.dataset.monthly}<span>/mês</span>`;
+        });
+    });
+
+    btnAnnual.addEventListener('click', () => {
+        btnAnnual.classList.add('active');
+        btnMonthly.classList.remove('active');
+        prices.forEach(priceEl => {
+            // Usei a lógica do seu design (os preços anuais são /mês também)
+            // Se os preços anuais fossem anuais, a lógica seria outra
+            const annualPrice = priceEl.dataset.annual;
+            priceEl.innerHTML = `R$${annualPrice}<span>/mês</span>`;
+        });
+    });
+</script>
+
+{% endblock %}
