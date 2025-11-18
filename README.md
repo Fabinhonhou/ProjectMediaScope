@@ -10,7 +10,7 @@
 * **Banco de Dados:** PostgreSQL
 * **Autenticação:** Django Auth + Social Auth (Google OAuth2)
 * **Integrações:** YouTube Data API v3
-* **Data Science:** TextBlob (Análise de Sentimentos)
+* **Data Science:** TextBlob (Análise de Sentimentos) (a ser implementado)
 * **Frontend:** HTML5, CSS3 (Dark Mode), JavaScript
 
 ---
