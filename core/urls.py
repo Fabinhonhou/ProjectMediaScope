@@ -10,4 +10,6 @@ urlpatterns = [
     path('admin-dashboard/clients/', views.admin_clients_view, name='admin_clients'),
     # Em core/urls.py
     path('teste-email-forca/', views.debug_email_view),
+    # Adicione nos urlpatterns
+    path('privacy-policy/', views.privacy_policy_view, name='privacy_policy'),
 ]

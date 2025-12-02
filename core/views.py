@@ -146,3 +146,8 @@ def debug_email_view(request):
         return HttpResponse("<h1>SUCESSO! Email enviado.</h1>")
     except Exception as e:
         return HttpResponse(f"<h1>ERRO:</h1> <p>{e}</p>")
+
+        
+
+def privacy_policy_view(request):
+    return render(request, 'core/privacy_policy.html')
