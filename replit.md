@@ -22,7 +22,9 @@ Aplicação Django para análise de dados do YouTube, incluindo dashboard de ana
 │   └── settings.py    # Configurações do projeto
 ├── static/            # Arquivos estáticos
 ├── requirements.txt   # Dependências Python
-├── Procfile          # Comando de deploy (Railway/Heroku)
+├── Procfile          # Comando de deploy (Railway/Heroku/Render)
+├── build.sh          # Script de build para Render
+├── render.yaml       # Configurações Render
 ├── railway.json      # Configurações Railway
 ├── nixpacks.toml     # Configurações Nixpacks
 └── runtime.txt       # Versão do Python
@@ -47,8 +49,21 @@ Veja `.env.example` para lista completa:
 - `EMAIL_HOST_USER` - Email para envio
 - `EMAIL_HOST_PASSWORD` - Senha do email
 
+## Deploy no Render
+1. Crie uma conta no [Render](https://render.com)
+2. Conecte seu repositório GitHub/GitLab
+3. Crie um novo Web Service
+4. O Render usará automaticamente o `render.yaml` para configurar:
+   - Banco PostgreSQL
+   - Variáveis de ambiente (DATABASE_URL, SECRET_KEY)
+5. Adicione manualmente as variáveis:
+   - `GOOGLE_OAUTH2_KEY` - Client ID do Google OAuth
+   - `GOOGLE_OAUTH2_SECRET` - Client Secret do Google OAuth
+   - `ALLOWED_HOSTS` - seu-dominio.onrender.com
+   - `CSRF_TRUSTED_ORIGINS` - https://seu-dominio.onrender.com
+6. O deploy será automático via build.sh
+
 ## Deploy no Railway
-Consulte o README.md para passo a passo completo:
 1. Conecte o repositório ao Railway
 2. Adicione um banco PostgreSQL
 3. Configure as variáveis de ambiente
@@ -73,6 +88,12 @@ gunicorn config.wsgi --bind 0.0.0.0:$PORT
 ```
 
 ## Alterações Recentes
+- 02/12/2025: Projeto preparado para deploy no Render
+  - Criado build.sh para build automático
+  - Criado render.yaml com configuração do banco PostgreSQL
+  - Adicionado domínio *.onrender.com em CSRF_TRUSTED_ORIGINS
+  - Atualizado .env.example com instruções para Render
+
 - 01/12/2025: Projeto preparado para deploy no Railway
   - Configurações de segurança movidas para variáveis de ambiente
   - Adicionado whitenoise para servir arquivos estáticos
