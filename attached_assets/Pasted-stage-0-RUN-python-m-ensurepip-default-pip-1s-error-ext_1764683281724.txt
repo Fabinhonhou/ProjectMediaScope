@@ -1,0 +1,60 @@
+stage-0
+RUN python -m ensurepip --default-pip
+1s
+error: externally-managed-environment
+
+× This environment is externally managed
+╰─> This command has been disabled as it tries to modify the immutable
+    `/nix/store` filesystem.
+    
+    To use Python with Nix and nixpkgs, have a look at the online documentation:
+    <https://nixos.org/manual/nixpkgs/stable/#python>.
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/nix/store/6jqph1j7igimbcdc1dwdi0f2p1hg4x95-python3-3.11.10/lib/python3.11/ensurepip/__main__.py", line 5, in <module>
+    sys.exit(ensurepip._main())
+             ^^^^^^^^^
+^^^^^^^^
+  File "/nix/store/6jqph1j7igimbcdc1dwdi0f2p1hg4x95-python3-3.11.10/lib/python3.11/ensurepip/__init__.py", line 286, in _main
+    return _bootstrap(
+           ^^^^^^^^^^^
+  File "/nix/store/6jqph1j7igimbcdc1dwdi0f2p1hg4x95-python3-3.11.10/lib/python3.11/ensurepip/__init__.py", line 202, in _bootstrap
+    return _run_pip([*args, *_PACKAGE_NAMES], additional_paths)
+           ^^^^^^^^^^^^^
+^^^^
+^^^^
+^^^
+^^^
+^^^
+^^
+^^^
+^^^
+^^^
+^^^
+^^^^^^
+^^
+  File "/nix/store/6jqph1j7igimbcdc1dwdi0f2p1hg4x95-python3-3.11.10/lib/python3.11/ensurepip/__init__.py", line 103, in _run_pip
+    return subprocess.run(cmd, check=True).returncode
+           ^^
+^^^^^^^^^^
+^^^^^^
+^^^^
+^^^
+^^^
+^^^
+  File "/nix/store/6jqph1j7igimbcdc1dwdi0f2p1hg4x95-python3-3.11.10/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/root/.nix-profile/bin/python', '-W', 'ignore::DeprecationWarning', '-c', '\nimport runpy\nimport sys\nsys.path = [\'/tmp/tmpm0marzfo/setuptools-65.5.0-py3-none-any.whl\', \'/tmp/tmpm0marzfo/pip-24.0-py3-none-any.whl\'] + sys.path\nsys.argv[1:] = [\'install\', \'--no-cache-dir\', \'--no-index\', \'--find-links\', \'/tmp/tmpm0marzfo\', \'setuptools\', \'pip\']\nrunpy.run_module("pip", run_name="__main__", alter_sys=True)\n']' returned non-zero exit status 1.
+Dockerfile:20
+-------------------
+18 |     ENV NIXPACKS_PATH=/opt/venv/bin:$NIXPACKS_PATH
+19 |     COPY . /app/.
+20 | >>> RUN --mount=type=cache,id=s/447ba92e-4b3f-4ea4-bb03-097a87064d89-/root/cache/pip,target=/root/.cache/pip python -m ensurepip --default-pip
+21 |     RUN --mount=type=cache,id=s/447ba92e-4b3f-4ea4-bb03-097a87064d89-/root/cache/pip,target=/root/.cache/pip python -m pip install --upgrade pip
+22 |     RUN --mount=type=cache,id=s/447ba92e-4b3f-4ea4-bb03-097a87064d89-/root/cache/pip,target=/root/.cache/pip python -m pip install -r requirements.txt
+-------------------
+ERROR: failed to build: failed to solve: process "/bin/bash -ol pipefail -c python -m ensurepip --default-pip" did not complete successfully: exit code: 1
+Error: Docker build failed
